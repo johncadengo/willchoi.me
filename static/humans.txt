@@ -1,0 +1,18 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Author: John Cadengo
+    Site: https://github.com/johncadengo
+    Twitter: @johncadengo
+
+# THANKS
+
+    Will Choi
+    Tiffany Pang
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+    Normalize.css, jQuery, Modernizr
