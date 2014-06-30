@@ -10,8 +10,8 @@ def page_not_found(e):
 
 
 @app.route("/")
-def home():
-    return render_template('index.html')
+def landing():
+    return render_template('landing.html')
 
 
 if __name__ == "__main__":
