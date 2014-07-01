@@ -5,3 +5,27 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
+
+header {
+    background: rgba(0, 0, 0, 0.5);
+    height: 7.3em;
+    width: 100%;
+    position: absolute;
+    bottom: 2.5em;
+}
+
+h1, li {
+    color: white;
+    opacity: 1.0;
+    display: inline-block;
+    margin-right: 1em;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 3.6em;
+}
+
+li {
+    font-size: 1.0em;
+}
