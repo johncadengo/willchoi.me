@@ -12,6 +12,7 @@ header {
     width: 100%;
     position: absolute;
     bottom: 2.5em;
+    font-family: 'Nunito', sans-serif;
 }
 
 h1, li {
@@ -21,6 +22,7 @@ h1, li {
     margin-right: 1em;
     margin-top: 0;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 h1 {
@@ -37,5 +39,5 @@ a {
 }
 
 a:hover {
-    color: yellow;
+    text-decoration: underline;
 }
