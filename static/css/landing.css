@@ -20,6 +20,7 @@ h1, li {
     display: inline-block;
     margin-right: 1em;
     margin-top: 0;
+    text-transform: uppercase;
 }
 
 h1 {
@@ -28,4 +29,13 @@ h1 {
 
 li {
     font-size: 1.0em;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: yellow;
 }
