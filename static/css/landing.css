@@ -12,25 +12,33 @@ header {
     width: 100%;
     position: absolute;
     bottom: 2.5em;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Muli', sans-serif;
+}
+
+nav {
+    margin: 0;
+    position: relative;
 }
 
 h1, li {
     color: white;
     opacity: 1.0;
     display: inline-block;
-    margin-right: 1em;
     margin-top: 0;
+    margin-bottom: 0;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    vertical-align: middle;
 }
 
 h1 {
     font-size: 3.6em;
+    margin-right: 0.75em;
 }
 
 li {
     font-size: 1.0em;
+    margin-right: 1.5em;
 }
 
 a {
