@@ -10,8 +10,38 @@ def page_not_found(e):
 
 
 @app.route("/")
-def landing():
-    return render_template('landing.html')
+def index():
+    return render_template('index.html')
+
+
+@app.route("/art/")
+def art():
+    return render_template('art.html')
+
+
+@app.route("/blog/")
+def blog():
+    return render_template('blog.html')
+
+
+@app.route("/contact/")
+def contact():
+    return render_template('contact.html')
+
+
+@app.route("/design/")
+def design():
+    return render_template('design.html')
+
+
+@app.route("/photo/")
+def photo():
+    return render_template('photo.html')
+
+
+@app.route("/photo-a-day-series/")
+def photo_a_day_series():
+    return render_template('photo-a-day-series.html')
 
 
 if __name__ == "__main__":

@@ -22,7 +22,31 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        {% set navigation_bar = [
+            ('/photo/', 'photo', 'Photo'),
+            ('/photo-a-day-series/', 'photo-a-day-series', 'Photo a day series'),
+            ('/design/', 'design', 'Design'),
+            ('/art/', 'art', 'Art'),
+            ('/blog/', 'blog', 'Blog'),
+            ('/contact/', 'contact', 'Contact'),
+        ] -%}
+        {% set active_page = active_page|default('index') -%}
+
         <!-- Add your site or application content here -->
+        {% block navigation %}
+        <header>
+            <nav>
+                <ul>
+                    <h1><a href="/">Will Choi</a></h1>
+                    {% for href, id, caption in navigation_bar %}
+                    <li{% if id == active_page %}class="active"{% endif%}>
+                        <a href="{{ href|e }}">{{ caption|e }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </header>
+        {% endblock %}
         {% block body %}{% endblock %}
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
