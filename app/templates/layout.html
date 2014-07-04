@@ -3,56 +3,57 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        {% block stylesheets %}{% endblock %}
-        <script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2.min.js') }}"></script>
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  {% block stylesheets %}{% endblock %}
+  <script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2.min.js') }}"></script>
+</head>
+<body>
+  <!--[if lt IE 7]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
 
-        {% set navigation_bar = [
-            ('/photo/', 'photo', 'Photo'),
-            ('/photo-a-day-series/', 'photo-a-day-series', 'Photo a day series'),
-            ('/design/', 'design', 'Design'),
-            ('/art/', 'art', 'Art'),
-            ('/blog/', 'blog', 'Blog'),
-            ('/contact/', 'contact', 'Contact'),
-        ] -%}
-        {% set active_page = active_page|default('index') -%}
+  {% set navigation_bar = [
+  ('/photo/', 'photo', 'Photo'),
+  ('/photo-a-day-series/', 'photo-a-day-series', 'Photo a day series'),
+  ('/design/', 'design', 'Design'),
+  ('/art/', 'art', 'Art'),
+  ('/blog/', 'blog', 'Blog'),
+  ('/contact/', 'contact', 'Contact'),
+  ] -%}
+  {% set active_page = active_page|default('index') -%}
 
-        <!-- Add your site or application content here -->
-        {% block navigation %}
-        <header>
-            <nav>
-                <ul>
-                    <h1><a href="/">Will Choi</a></h1>
-                    {% for href, id, caption in navigation_bar %}
-                    <li{% if id == active_page %}class="active"{% endif%}>
-                        <a href="{{ href|e }}">{{ caption|e }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </nav>
-        </header>
-        {% endblock %}
-        {% block body %}{% endblock %}
+  <!-- Add your site or application content here -->
+  {% block navigation %}
+  <header>
+    <div class="overlay"></div>
+    <nav>
+      <ul>
+        <h1><a href="/">Will Choi</a></h1>
+        {% for href, id, caption in navigation_bar %}
+        <li{% if id == active_page %}class="active"{% endif%}>
+        <a href="{{ href|e }}">{{ caption|e }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  </header>
+  {% endblock %}
+  {% block body %}{% endblock %}
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/vendor/jquery-1.10.2.min.js') }}"><\/script>')</script>
-        <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/vendor/jquery-1.10.2.min.js') }}"><\/script>')</script>
+  <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-    </body>
+</body>
 </html>
