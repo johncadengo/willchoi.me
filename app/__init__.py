@@ -1,7 +1,11 @@
 from flask import Flask, render_template
+from werkzeug.contrib.fixers import ProxyFix
 
-app = Flask(__name__)
+
+app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
+app.config.from_pyfile('config.py')
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
 @app.errorhandler(404)
@@ -42,7 +46,3 @@ def photo():
 @app.route("/photo-a-day-series/")
 def photo_a_day_series():
     return render_template('photo-a-day-series.html')
-
-
-if __name__ == "__main__":
-    app.run()

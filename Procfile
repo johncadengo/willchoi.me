@@ -1,1 +1,1 @@
-web: gunicorn willchoi:app
+web: gunicorn -w 3 wsgi:app
