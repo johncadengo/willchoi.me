@@ -14,9 +14,6 @@ header:before {
   position: absolute;
   height: 7.3em;
   width: 100%;
-  bottom: 2.5em;
-
-  margin: -40px;
 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -39,8 +36,9 @@ header {
 .overlay {
   z-index: 10;
 
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
   height: 7.3em;
+  min-width: 1100px;
   position: relative;
 }
 
