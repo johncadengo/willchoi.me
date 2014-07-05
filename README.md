@@ -11,7 +11,7 @@ Install the requirements. Then,
 
 ### Server config
 
-    $ dokku config:set willchoi GOOGLE_ANALYTICS_ID=UA-XXXXX-X
+    $ dokku config:set willchoi SQLALCHEMY_DATABASE_URI=postgresql://username:password@host:port/database
 
 ### Stack
 
@@ -21,10 +21,10 @@ Install the requirements. Then,
 
 ### Screenshots
 
-![http://willchoi.me](https://github.com/johncadengo/willchoi.me/raw/master/screen_1.png)
-![http://willchoi.me](https://github.com/johncadengo/willchoi.me/raw/master/screen_2.png)
-![http://willchoi.me](https://github.com/johncadengo/willchoi.me/raw/master/screen_3.png)
-![http://willchoi.me](https://github.com/johncadengo/willchoi.me/raw/master/screen_4.png)
+![http://willchoi.me](https://github.com/johncadengo/willchoi.me/raw/master/screen-1.png)
+![http://willchoi.me](https://github.com/johncadengo/willchoi.me/raw/master/screen-2.png)
+![http://willchoi.me](https://github.com/johncadengo/willchoi.me/raw/master/screen-3.png)
+![http://willchoi.me](https://github.com/johncadengo/willchoi.me/raw/master/screen-4.png)
 
 ### Will Choi
 

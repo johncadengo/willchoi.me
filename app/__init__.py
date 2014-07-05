@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+from flask.ext.sqlalchemy import SQLAlchemy
+
 from werkzeug.contrib.fixers import ProxyFix
 
 
@@ -11,6 +13,19 @@ except IOError:
     pass
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
+
+db = SQLAlchemy(app)
+
+# Late import so dependencies work right
+from . import models
+
+# Populate database on the first request. May take awhile.
+@app.before_first_request
+def before_first_request():
+    try:
+        models.db.create_all()
+    except Exception, e:
+        app.logger.error(str(e))
 
 
 @app.errorhandler(404)

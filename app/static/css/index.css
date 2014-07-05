@@ -1,23 +1,17 @@
 html {
-  background: url(../img/background.png) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background: url(../img/bg-balloon.png) no-repeat center center fixed;
   background-size: cover;
 }
 
 header:before {
   content: "";
   z-index: -1;
-  background: url(../img/background-blurred.png) no-repeat center center fixed;
+  background: url(../img/bg-balloon-blur.png) no-repeat center center fixed;
 
   position: absolute;
   height: 7.3em;
   width: 100%;
 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
 }
 
