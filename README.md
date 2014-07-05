@@ -9,6 +9,10 @@ Install the requirements. Then,
 
     $ python wsgi.py
 
+### Server config
+
+    $ dokku config:set willchoi GOOGLE_ANALYTICS_ID=UA-XXXXX-X
+
 ### Stack
 
 * [Flask](http://flask.pocoo.org/)
@@ -24,8 +28,9 @@ Install the requirements. Then,
 
 ### Will Choi
 
-Will's Portfolio: [http://willchoi.me](http://www.willchoi.me/)
-Will's Personal Site: [http://willschoi.com](http://www.willschoi.com/)
+Will's Portfolio: [http://willchoi.me](http://www.willchoi.me/).
+
+Will's Personal Site: [http://willschoi.com](http://www.willschoi.com/).
 
 ### Roadmap
 
