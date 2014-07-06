@@ -19,15 +19,16 @@ class Image(db.Model):
     url = db.Column(db.Text())
     type = db.Column(db.String(64)) # Thumbnail, Low Res, Standard Res
 
+    photo_id = db.Column(db.ForeignKey('photos.id'))
+
 
 class Location(db.Model):
     __tablename__ = 'locations'
 
     id = db.Column(db.Integer(), primary_key=True)
+    instagram_id = db.Column(db.String(255), unique=True)
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())
-    instagram_id = db.Column(db.Integer(), unique=True)
-    street_address = db.Column(db.String(255))
     name = db.Column(db.String(255))
 
 
@@ -35,6 +36,7 @@ class Photo(db.Model):
     __tablename__ = 'photos'
 
     id = db.Column(db.Integer(), primary_key=True)
+    instagram_id = db.Column(db.String(255), unique=True)
     caption = db.Column(db.String(255))
     created_time = db.Column(db.DateTime())
     featured_on = db.Column(db.String(255))
@@ -45,11 +47,11 @@ class Photo(db.Model):
     locations = db.relationship('Location', secondary=locations_photos,
         backref=db.backref('photos', lazy='dynamic'))
     tags = db.relationship('Tag', secondary=photos_tags,
-        backref=db.backref('tags', lazy='dynamic'))
+        backref=db.backref('photos', lazy='dynamic'))
 
 
 class Tag(db.Model):
     __tablename__ = 'tags'
 
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(255))
+    name = db.Column(db.String(255), unique=True)
