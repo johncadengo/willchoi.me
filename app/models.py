@@ -37,7 +37,7 @@ class Photo(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     instagram_id = db.Column(db.String(255), unique=True)
-    caption = db.Column(db.String(255))
+    caption = db.Column(db.Text())
     created_time = db.Column(db.DateTime())
     featured_on = db.Column(db.String(255))
     link = db.Column(db.Text())
@@ -55,3 +55,6 @@ class Tag(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(255), unique=True)
+
+    def __hash__(self):
+        return hash(self.name)
