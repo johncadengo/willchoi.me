@@ -1,0 +1,15 @@
+main {
+  margin-top: 12.3em;
+  text-align: center;
+}
+
+section {
+  font-family: 'Muli', sans-serif;
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+#colophon {
+  text-transform: uppercase;
+}
+

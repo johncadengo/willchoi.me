@@ -1,2 +1,20 @@
 {% extends "layout.html" %}
 {% set active_page = "photo-a-day-series" %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/photo-a-day-series.css') }}">
+{% endblock %}
+{% block body %}
+<main>
+  <section id="colophon">
+    <p>
+      In 2012, I embarked on a photographic journey<br>
+      that changed the way I look at the world.<br>
+      Welcome to my photo a day project.
+    </p>
+    <p>All photos taken on iPhone 4/5s</p>
+  </section>
+  <section id="years">
+
+  </section>
+</main>
+{% endblock %}
