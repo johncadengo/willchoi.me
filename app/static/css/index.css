@@ -8,23 +8,12 @@ header:before {
   z-index: -1;
   background: url(../img/bg-balloon-blur.png) no-repeat center center fixed;
 
-  position: absolute;
-  height: 7.3em;
-  width: 100%;
-
   background-size: cover;
 }
 
 header {
-  z-index: 0;
-
-  position: absolute;
-  height: 7.3em;
-  width: 100%;
+  top: auto;
   bottom: 2.5em;
-
-  font-family: 'Muli', sans-serif;
-  white-space: nowrap;
 }
 
 .overlay {
@@ -36,40 +25,10 @@ header {
   position: relative;
 }
 
-nav {
-  z-index: 100;
-
-  margin: 0;
-  top: -7.3em;
-  position: relative;
-}
-
 h1, li {
   color: white;
-  opacity: 1.0;
-  display: inline-block;
-  margin-top: 0;
-  margin-bottom: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  vertical-align: middle;
-}
-
-h1 {
-  font-size: 3.6em;
-  margin-right: 0.75em;
-}
-
-li {
-  font-size: 1.0em;
-  margin-right: 1.6em;
 }
 
 a {
   color: white;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }

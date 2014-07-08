@@ -11,7 +11,6 @@ manager = Manager(usage='Perform database operations')
 
 
 def get_media(feed):
-    'Compensate from bug '
     g = (media for medias, next in feed for media in medias)
     while g:
         try:

@@ -14,6 +14,7 @@
   <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
   {% block stylesheets %}{% endblock %}
   <script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2.min.js') }}"></script>
 </head>
@@ -40,7 +41,7 @@
       <ul>
         <h1><a href="/">Will Choi</a></h1>
         {% for href, id, caption in navigation_bar %}
-        <li{% if id == active_page %}class="active"{% endif%}>
+        <li{% if id == active_page %} class="active"{% endif%}>
         <a href="{{ href|e }}">{{ caption|e }}</a>
       </li>
       {% endfor %}
