@@ -22,12 +22,27 @@ header {
   white-space: nowrap;
 }
 
+.overlay {
+  z-index: 10;
+
+  background: rgba(0, 0, 0, 1.0);
+  height: 1px;
+  width: 65em;
+  margin: auto;
+  position: relative;
+}
+
 nav {
   z-index: 100;
 
-  margin: 0;
+  margin: auto;
+  text-align: center;
   top: -7.3em;
   position: relative;
+}
+
+ul {
+  padding: 0;
 }
 
 h1, li {
@@ -50,6 +65,10 @@ h1 {
 li {
   font-size: 1.0em;
   margin-right: 1.6em;
+}
+
+li:last-child{
+  margin-right: 0;
 }
 
 a {
