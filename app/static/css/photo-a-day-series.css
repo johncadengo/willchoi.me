@@ -1,6 +1,7 @@
 main {
   margin-top: 12.3em;
   text-align: center;
+  text-transform: uppercase;
 }
 
 section {
@@ -9,7 +10,20 @@ section {
   white-space: nowrap;
 }
 
-#colophon {
-  text-transform: uppercase;
+.left {
+  float: left;
+  margin-right: 50px;
+  width: 225px;
 }
 
+.left:last-child {
+  margin-right: 0;
+}
+
+
+.years {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 775px;
+}
