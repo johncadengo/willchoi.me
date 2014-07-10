@@ -12,7 +12,7 @@ section {
 
 .left {
   float: left;
-  margin-right: 30px;
+  margin-right: 40px;
   width: 300px;
 }
 
@@ -24,9 +24,14 @@ section {
   text-align: left;
   margin-left: auto;
   margin-right: auto;
-  width: 960px;
+  margin-top: 40px;
+  width: 980px;
 }
 
 .years img {
   width: 300px;
+}
+
+h2, .left p {
+  margin: 0;
 }
