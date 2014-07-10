@@ -43,11 +43,33 @@ class Photo(db.Model):
     link = db.Column(db.Text())
 
     images = db.relationship('Image',
-        backref=db.backref('photo', lazy='joined'))
+        backref=db.backref('photo', lazy='joined', order_by='Image.width'))
     locations = db.relationship('Location', secondary=locations_photos,
         backref=db.backref('photos', lazy='dynamic'))
     tags = db.relationship('Tag', secondary=photos_tags,
         backref=db.backref('photos', lazy='dynamic'))
+
+    # This assumes that the instagram api always returns 3 images
+    @property
+    def thumbnail_image(self):
+        try:
+            return self.images[0]
+        except IndexError:
+            return None
+
+    @property
+    def low_res_image(self):
+        try:
+            return self.images[1]
+        except IndexError:
+            return None
+
+    @property
+    def standard_res_image(self):
+        try:
+            return self.images[2]
+        except IndexError:
+            return None
 
 
 class Tag(db.Model):

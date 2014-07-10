@@ -1,6 +1,7 @@
 from flask import render_template
 
-from . import app
+from . import app, db
+from .models import Photo, Image
 
 
 @app.errorhandler(404)
@@ -40,4 +41,10 @@ def photo():
 
 @app.route("/photo-a-day-series/")
 def photo_a_day_series():
-    return render_template('photo-a-day-series.html')
+    # Get the first photo from each year
+    photos = db.session.query(Photo).filter(
+                Photo.created_time>'2013-06-01'
+            ).order_by(Photo.created_time).limit(3).all()
+    images = [photo.standard_res_image.url for photo in photos]
+
+    return render_template('photo-a-day-series.html', images=images)
