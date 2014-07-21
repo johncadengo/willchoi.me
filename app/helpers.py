@@ -11,10 +11,10 @@ def get_years():
 
         Feb 29, 2012 - Feb 28, 2013
         Mar 1, 2013 - Feb 28, 2014
-        Mar 1, 2014 - Present
+        Mar 1, 2014 - Feb 28, 2015
 
     Each result will contain a tuple of the sample photo, a start date, and an
-    end date.
+    end date. Note the last end date is in the future.
     """
     first_photo = db.session.query(Photo).order_by(Photo.created_time).first()
     while True:
