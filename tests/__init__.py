@@ -32,7 +32,7 @@ class TestCase(Base):
         db.session.add(photo)
         db.session.commit()
 
-        assert photo in db.session
+        self.assertIn(photo, db.session)
 
         # Mock some images
         hi_img = Image()
@@ -57,14 +57,14 @@ class TestCase(Base):
         db.session.add_all(images)
         db.session.commit()
 
-        assert all(i in db.session for i in images)
+        self.assertTrue(all(i in db.session for i in images))
 
         # Connect images to photo
         photo.images.extend(images)
         db.session.commit()
 
-        assert all(i in photo.images for i in images)
-        assert all(photo is i.photo for i in images)
+        self.assertTrue(all(i in photo.images for i in images))
+        self.assertTrue(all(photo is i.photo for i in images))
 
         # Mock location and tag
         loc = Location()
@@ -76,7 +76,7 @@ class TestCase(Base):
         db.session.add(loc)
         db.session.commit()
 
-        assert loc in db.session
+        self.assertIn(loc, db.session)
 
         tag = Tag()
         tag.name = 'july4th'
@@ -84,7 +84,7 @@ class TestCase(Base):
         db.session.add(tag)
         db.session.commit()
 
-        assert tag in db.session
+        self.assertIn(tag, db.session)
 
         # Connect location and tag to photo
         photo.locations.append(loc)
@@ -92,10 +92,10 @@ class TestCase(Base):
 
         db.session.commit()
 
-        assert loc in photo.locations
-        assert tag in photo.tags
-        assert photo in loc.photos
-        assert photo in tag.photos
+        self.assertIn(loc, photo.locations)
+        self.assertIn(tag, photo.tags)
+        self.assertIn(photo, loc.photos)
+        self.assertIn(photo, tag.photos)
 
     def tearDown(self):
         db.session.remove()

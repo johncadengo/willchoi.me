@@ -5,6 +5,7 @@ locations_photos = db.Table('locations_photos',
     db.Column('location_id', db.Integer(), db.ForeignKey('locations.id')),
     db.Column('photo_id', db.Integer(), db.ForeignKey('photos.id')))
 
+
 photos_tags = db.Table('photos_tags',
     db.Column('photo_id', db.Integer(), db.ForeignKey('photos.id')),
     db.Column('tag_id', db.Integer(), db.ForeignKey('tags.id')))

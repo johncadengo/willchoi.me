@@ -16,4 +16,4 @@ class TestImage(TestCase):
         db.session.add(image)
         db.session.commit()
 
-        assert image in db.session
+        self.assertIn(image, db.session)
