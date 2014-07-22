@@ -1,3 +1,6 @@
+from datetime import date
+from dateutil.relativedelta import relativedelta
+
 from . import db
 from .models import Photo
 
@@ -16,6 +19,18 @@ def get_years():
     Each result will contain a tuple of the sample photo, a start date, and an
     end date. Note the last end date is in the future.
     """
-    first_photo = db.session.query(Photo).order_by(Photo.created_time).first()
+    photo = db.session.query(Photo).order_by(Photo.created_time).first()
+    start = photo.created_time.date()
     while True:
-        yield first_photo
+        if start.day != 1:
+            first_day_of_month = date(start.year, (start.month + 1) % 12, 1)
+        else:
+            first_day_of_month = start
+
+        end = first_day_of_month + relativedelta(years=1) - relativedelta(days=1)
+
+        yield photo, start, end
+        start = end + relativedelta(days=1)
+        photo = db.session.query(Photo).filter(
+            Photo.created_time>=start
+        ).order_by(Photo.created_time).first()
