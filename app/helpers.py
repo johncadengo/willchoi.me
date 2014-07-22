@@ -21,7 +21,7 @@ def get_years():
     """
     photo = db.session.query(Photo).order_by(Photo.created_time).first()
     start = photo.created_time.date()
-    while True:
+    while photo:
         if start.day != 1:
             first_day_of_month = date(start.year, (start.month + 1) % 12, 1)
         else:

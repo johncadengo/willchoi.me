@@ -9,6 +9,10 @@ from tests import TestCase
 
 class TestHelpers(TestCase):
 
+    def test_get_years_one_year(self):
+        # This should only run once since the db only has 1 year initially
+        self.assertEqual(1, len(list(get_years())))
+
     def test_get_years(self):
         # Set up some mock objects
         first_photo = Photo()
