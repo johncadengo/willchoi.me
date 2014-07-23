@@ -1,7 +1,7 @@
 from datetime import date
 
 from app import db
-from app.helpers import get_years
+from app.helpers import Pagination
 from app.models import Photo
 
 from tests import TestCase
@@ -9,11 +9,47 @@ from tests import TestCase
 
 class TestHelpers(TestCase):
 
-    def test_get_years_one_year(self):
-        # This should only run once since the db only has 1 year initially
-        self.assertEqual(1, len(list(get_years())))
+    def test_day_paginator(self):
+        # Start
+        first_photo = Photo()
+        first_photo.created_time = date(2013, 03, 01)
 
-    def test_get_years(self):
+        db.session.add(first_photo)
+        db.session.commit()
+
+        self.assertIn(first_photo, db.session)
+
+        # End
+        second_photo = Photo()
+        second_photo.created_time = date(2013, 03, 15)
+
+        db.session.add(second_photo)
+        db.session.commit()
+
+        self.assertIn(second_photo, db.session)
+
+        # Create day pagination
+        pagination = Pagination(2013, 03)
+
+        self.assertEqual(1, pagination.page)
+        self.assertEqual(15, pagination.pages)
+        self.assertFalse(pagination.has_prev)
+        self.assertTrue(pagination.has_next)
+
+    def test_one_year_paginator(self):
+        photo = Photo()
+        photo.created_time = date(2012, 02, 29)
+
+        db.session.add(photo)
+        db.session.commit()
+
+        self.assertIn(photo, db.session)
+
+        # This should only run once since the db only has 1 year initially
+        pagination = Pagination()
+        self.assertEqual(1, len(list(pagination.iter_pages())))
+
+    def test_year_paginator(self):
         # Set up some mock objects
         first_photo = Photo()
         first_photo.created_time = date(2012, 02, 29)
@@ -41,11 +77,14 @@ class TestHelpers(TestCase):
 
         self.assertIn(third_photo, db.session)
 
+        # Create pagination after photos
+        pagination = Pagination()
+
         # We should get 3 photos back with the expected date range
         expected_years = [
             (first_photo, date(2012, 02, 29), date(2013, 02, 28)),
             (second_photo, date(2013, 03, 01), date(2014, 02, 28)),
             (third_photo, date(2014, 03, 01), date(2015, 02, 28))
         ]
-        for expected, actual in zip(expected_years, get_years()):
+        for expected, actual in zip(expected_years, pagination.iter_pages()):
             self.assertEqual(expected, actual)
