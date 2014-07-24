@@ -1,4 +1,5 @@
 from datetime import date
+from dateutil.relativedelta import relativedelta
 from itertools import izip
 
 from app import db
@@ -30,7 +31,7 @@ class TestHelpers(TestCase):
         self.assertIn(second_photo, db.session)
 
         # Create day pagination
-        pagination = Pagination(2013, 03)
+        pagination = Pagination(2013, 03, 01)
 
         self.assertEqual(1, pagination.page)
         self.assertEqual(15, pagination.pages)
@@ -38,7 +39,7 @@ class TestHelpers(TestCase):
         self.assertTrue(pagination.has_next)
 
         # Create month pagination
-        pagination = Pagination(2013)
+        pagination = Pagination(2013, 03)
 
         self.assertEqual(3, pagination.page)
         self.assertEqual(1, pagination.pages)
@@ -46,7 +47,7 @@ class TestHelpers(TestCase):
         self.assertFalse(pagination.has_next)
 
         # Create year pagination
-        pagination = Pagination()
+        pagination = Pagination(2013)
 
         self.assertEqual(2013, pagination.page)
         self.assertEqual(1, pagination.pages)
@@ -57,12 +58,41 @@ class TestHelpers(TestCase):
         second_photo.created_time = date(2013, 03, 31)
         db.session.commit()
 
-        pagination = Pagination(2013, 03)
+        pagination = Pagination(2013, 03, 01)
 
         self.assertEqual(1, pagination.page)
         self.assertEqual(31, pagination.pages)
         self.assertFalse(pagination.has_prev)
         self.assertTrue(pagination.has_next)
+
+    def test_day_paginator_iter(self):
+        # Start
+        photos = [Photo(created_time=(date(2012, 01, day + 1))) for day in xrange(31)]
+
+        db.session.add_all(photos)
+        db.session.commit()
+
+        for photo in photos:
+            self.assertIn(photo, db.session)
+
+        pagination = Pagination(2012, 01, 01)
+
+        self.assertEqual(1, pagination.page)
+        self.assertEqual(31, pagination.pages)
+
+        # Check these before and after iterating through paginator
+        self.assertFalse(pagination.has_prev)
+        self.assertTrue(pagination.has_next)
+
+        expected_days = [(photos[day], date(2012, 01, day + 1),
+                         date(2012, 01, day + 1) + relativedelta(days=1))
+                         for day in xrange(31)]
+        for expected, actual in izip(expected_days, pagination.iter_pages()):
+            self.assertEqual(expected, actual)
+            self.assertEqual(expected[1].day, pagination.page)
+
+        self.assertTrue(pagination.has_prev)
+        self.assertFalse(pagination.has_next)
 
     def test_one_year_paginator(self):
         photo = Photo()
@@ -74,7 +104,7 @@ class TestHelpers(TestCase):
         self.assertIn(photo, db.session)
 
         # This should only run once since the db only has 1 year initially
-        pagination = Pagination()
+        pagination = Pagination(2012)
         self.assertEqual(1, len(list(pagination.iter_pages())))
 
     def test_year_paginator(self):
@@ -106,7 +136,7 @@ class TestHelpers(TestCase):
         self.assertIn(third_photo, db.session)
 
         # Create pagination after photos
-        pagination = Pagination()
+        pagination = Pagination(2012)
 
         self.assertEqual(3, pagination.pages)
 

@@ -7,7 +7,7 @@ from .models import Photo
 
 
 class Paginator(object):
-    def __init__(self, year=None, month=None, day=None):
+    def __init__(self, year, month=None, day=None):
         self.year = year
         self.month = month
         self.day = day
@@ -50,9 +50,15 @@ class YearPaginator(Paginator):
         Each result will contain a tuple of the sample photo, a start date, and an
         end date. Note the last end date is in the future.
         """
-        photo = self.first_photo
         start = self.first_photo.created_time.date()
-        while photo:
+        while True:
+            photo = db.session.query(Photo).filter(
+                Photo.created_time>=start
+            ).order_by(Photo.created_time).first()
+
+            if not photo:
+                break
+
             if start.day != 1:
                 first_day_of_month = date(start.year, (start.month + 1) % 12, 1)
             else:
@@ -62,13 +68,9 @@ class YearPaginator(Paginator):
 
             # Update what page we're on
             self.year = photo.created_time.date().year
-            print self.year
-            yield photo, start, end
 
+            yield photo, start, end
             start = end + relativedelta(days=1)
-            photo = db.session.query(Photo).filter(
-                Photo.created_time>=start
-            ).order_by(Photo.created_time).first()
 
     @property
     def page(self):
@@ -86,6 +88,32 @@ class MonthPaginator(Paginator):
 
         end = min(self.last_photo.created_time.date(), last_date_in_year).month
         return end
+
+    def iter_pages(self):
+        """Yields a sample photo and date range from each month of that year and
+        stops iteration when it reaches the latest photo in the database.
+
+        It starts on a photo offset by the very first photo in the database.
+        For example, if the first photo was in March 2012, and we are asking
+        for months of 2013, it will return 12 months starting in March 2013 and
+        not January 2013.
+        """
+        start = date(self.year, self.start, 1)
+        while True:
+            photo = db.session.query(Photo).filter(
+                    Photo.created_time>=start
+            ).order_by(Photo.created_time).first()
+
+            if not photo:
+                break
+
+            end = start + relativedelta(months=1) - relativedelta(days=1)
+
+            # Update what page we're on
+            self.month = photo.created_time.date().month
+
+            yield photo, start, end
+            start = end + relativedelta(days=1)
 
     @property
     def page(self):
@@ -105,6 +133,28 @@ class DayPaginator(Paginator):
         end = min(self.last_photo.created_time.date(), last_date_in_month).day
         return end
 
+    def iter_pages(self):
+        """Yields a sample photo for each day of the month and stops iteration
+        either when it reaches the end of the month or the latest photo in the
+        database.
+        """
+        start = date(self.year, self.start, self.day)
+        while True:
+            end = start + relativedelta(days=1)
+
+            photo = db.session.query(Photo).filter(
+                    Photo.created_time>=start,
+                    Photo.created_time<=end
+            ).order_by(Photo.created_time).first()
+
+            if not photo:
+                break
+
+            self.day = photo.created_time.date().day
+
+            yield photo, start, end
+            start = end
+
     @property
     def page(self):
         return self.day or self.start
@@ -115,7 +165,7 @@ class DayPaginator(Paginator):
 
 
 class Pagination(object):
-    def __init__(self, year=None, month=None, day=None):
+    def __init__(self, year, month=None, day=None):
         self.year = year
         self.month = month
         self.day = day
@@ -141,11 +191,16 @@ class Pagination(object):
         return self._paginator.end - self._paginator.start + 1
 
     def _identify_paginator(self):
-        if self.month and self.year:
+        try:
+            date(self.year, max(self.month, 1), max(self.day, 1))
+        except:
+            raise ValueError('Date does not exist!')
+
+        if self.day and self.month and self.year:
             return DayPaginator(self.year, self.month, self.day)
-        elif self.year:
+        elif self.month and self.year:
             return MonthPaginator(self.year, self.month)
-        elif not self.month and not self.day:
+        elif self.year:
             return YearPaginator(self.year)
         else:
             raise ValueError('Unsupported pagination!')
