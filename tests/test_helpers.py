@@ -1,4 +1,5 @@
 from datetime import date
+from itertools import izip
 
 from app import db
 from app.helpers import Pagination
@@ -9,7 +10,7 @@ from tests import TestCase
 
 class TestHelpers(TestCase):
 
-    def test_day_paginator(self):
+    def test_day_paginator_two_dates(self):
         # Start
         first_photo = Photo()
         first_photo.created_time = date(2013, 03, 01)
@@ -33,6 +34,33 @@ class TestHelpers(TestCase):
 
         self.assertEqual(1, pagination.page)
         self.assertEqual(15, pagination.pages)
+        self.assertFalse(pagination.has_prev)
+        self.assertTrue(pagination.has_next)
+
+        # Create month pagination
+        pagination = Pagination(2013)
+
+        self.assertEqual(3, pagination.page)
+        self.assertEqual(1, pagination.pages)
+        self.assertFalse(pagination.has_prev)
+        self.assertFalse(pagination.has_next)
+
+        # Create year pagination
+        pagination = Pagination()
+
+        self.assertEqual(2013, pagination.page)
+        self.assertEqual(1, pagination.pages)
+        self.assertFalse(pagination.has_prev)
+        self.assertFalse(pagination.has_next)
+
+        # Widen range
+        second_photo.created_time = date(2013, 03, 31)
+        db.session.commit()
+
+        pagination = Pagination(2013, 03)
+
+        self.assertEqual(1, pagination.page)
+        self.assertEqual(31, pagination.pages)
         self.assertFalse(pagination.has_prev)
         self.assertTrue(pagination.has_next)
 
@@ -80,11 +108,21 @@ class TestHelpers(TestCase):
         # Create pagination after photos
         pagination = Pagination()
 
+        self.assertEqual(3, pagination.pages)
+
+        # Check these before and after iterating through paginator
+        self.assertFalse(pagination.has_prev)
+        self.assertTrue(pagination.has_next)
+
         # We should get 3 photos back with the expected date range
         expected_years = [
             (first_photo, date(2012, 02, 29), date(2013, 02, 28)),
             (second_photo, date(2013, 03, 01), date(2014, 02, 28)),
             (third_photo, date(2014, 03, 01), date(2015, 02, 28))
         ]
-        for expected, actual in zip(expected_years, pagination.iter_pages()):
+        for expected, actual in izip(expected_years, pagination.iter_pages()):
             self.assertEqual(expected, actual)
+            self.assertEqual(expected[1].year, pagination.page)
+
+        self.assertTrue(pagination.has_prev)
+        self.assertFalse(pagination.has_next)

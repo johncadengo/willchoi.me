@@ -34,7 +34,7 @@ class Paginator(object):
 class YearPaginator(Paginator):
     @property
     def end(self):
-        return self.last_photo.created_time.date()
+        return self.last_photo.created_time.date().year
 
     def iter_pages(self):
         """Yields a sample photo and date range from each year and stops
@@ -51,7 +51,7 @@ class YearPaginator(Paginator):
         end date. Note the last end date is in the future.
         """
         photo = self.first_photo
-        start = self.start
+        start = self.first_photo.created_time.date()
         while photo:
             if start.day != 1:
                 first_day_of_month = date(start.year, (start.month + 1) % 12, 1)
@@ -60,7 +60,11 @@ class YearPaginator(Paginator):
 
             end = first_day_of_month + relativedelta(years=1) - relativedelta(days=1)
 
+            # Update what page we're on
+            self.year = photo.created_time.date().year
+            print self.year
             yield photo, start, end
+
             start = end + relativedelta(days=1)
             photo = db.session.query(Photo).filter(
                 Photo.created_time>=start
@@ -72,7 +76,7 @@ class YearPaginator(Paginator):
 
     @property
     def start(self):
-        return self.first_photo.created_time.date()
+        return self.first_photo.created_time.date().year
 
 
 class MonthPaginator(Paginator):
